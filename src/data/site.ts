@@ -23,7 +23,6 @@ export const business = {
 };
 
 export const navLinks = [
-  { label: 'Home', href: '/' },
   {
     label: 'Services',
     href: '/services/',
