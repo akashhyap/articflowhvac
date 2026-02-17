@@ -1,0 +1,42 @@
+---
+import { testimonials as allTestimonials, type Testimonial } from '../data/site';
+
+export interface Props {
+  heading?: string;
+  limit?: number;
+  featured?: boolean;
+}
+
+const { heading = 'What Our Customers Say', limit = 4, featured = false } = Astro.props;
+const items = featured ? allTestimonials.slice(0, limit) : allTestimonials;
+---
+
+<section class={`section-padding ${featured ? 'bg-primary-50' : 'bg-white'}`}>
+  <div class="container-wide">
+    <h2 class="text-h2 text-primary text-center mb-10">{heading}</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+      {items.map((t) => (
+        <div class="bg-white rounded-xl shadow-md border border-neutral-100 p-7">
+          <div class="flex items-center gap-1 mb-3">
+            {Array.from({ length: t.rating }).map(() => (
+              <span class="text-accent text-xl">★</span>
+            ))}
+          </div>
+          <p class="text-neutral-700 text-body italic leading-relaxed mb-5">"{t.text}"</p>
+          <div class="flex items-center justify-between border-t border-neutral-100 pt-4">
+            <div>
+              <p class="font-heading font-bold text-primary text-body">— {t.name}</p>
+              <p class="text-neutral-500 text-small">{t.location}</p>
+            </div>
+            <span class="text-small text-secondary font-medium bg-secondary-50 px-3 py-1 rounded-full">{t.service}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+    {featured && (
+      <div class="text-center mt-10">
+        <a href="/testimonials/" class="btn-secondary">Read More Reviews</a>
+      </div>
+    )}
+  </div>
+</section>

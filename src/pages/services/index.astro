@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { serviceHubs, business } from '../../data/site';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  provider: { '@type': 'LocalBusiness', name: business.name },
+  name: 'HVAC Services in Las Vegas',
+  description: 'Comprehensive HVAC services including air conditioning, heating, commercial HVAC, and indoor air quality services in Las Vegas, NV.',
+  areaServed: { '@type': 'City', name: 'Las Vegas', addressRegion: 'NV' },
+};
+---
+
+<BaseLayout
+  title="Professional HVAC Services in Las Vegas | ArcticFlow HVAC"
+  description="Comprehensive HVAC services in Las Vegas — AC repair, heating, commercial HVAC, indoor air quality. Licensed technicians, 24/7 emergency service. Call (725) 349-4849."
+  schema={schema}
+>
+  <Hero heading="Professional HVAC Services in Las Vegas" subheading="Complete heating, cooling, and air quality solutions for homes and businesses" />
+  <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Services' }]} />
+
+  <!-- Service Hubs -->
+  <section class="section-padding bg-white">
+    <div class="container-wide">
+      <h2 class="text-h2 text-primary text-center mb-4">Our Service Categories</h2>
+      <p class="text-neutral-500 text-body-lg text-center max-w-3xl mx-auto mb-12">
+        ArcticFlow HVAC provides a full range of heating, cooling, and indoor air quality services for residential and commercial customers throughout the Las Vegas Valley.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        {serviceHubs.map((hub) => (
+          <ServiceCard
+            title={hub.hubTitle}
+            description={hub.intro.substring(0, 150) + '...'}
+            href={`/services/${hub.slug}/`}
+            icon={hub.icon}
+          />
+        ))}
+      </div>
+
+      <!-- All Individual Services List -->
+      <h2 class="text-h2 text-primary text-center mb-8 mt-16">All HVAC Services</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+        {serviceHubs.flatMap((hub) =>
+          hub.spokes.map((spoke) => (
+            <a
+              href={`/services/${hub.slug}/${spoke.slug}/`}
+              class="flex items-center gap-3 p-4 bg-neutral-50 rounded-lg border border-neutral-100 hover:bg-primary-50 hover:border-secondary-200 transition-all duration-200 group"
+            >
+              <span class="text-2xl">{spoke.icon}</span>
+              <div>
+                <span class="text-body font-semibold text-primary group-hover:text-secondary transition-colors">{spoke.title}</span>
+                <span class="text-small text-neutral-400 block">{hub.title}</span>
+              </div>
+            </a>
+          ))
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Emergency Banner -->
+  <section class="bg-accent py-8 px-4">
+    <div class="container-wide flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <h2 class="text-h3 text-primary-900">Need Emergency HVAC Service?</h2>
+        <p class="text-primary-700 text-body">Available 24/7 for urgent heating and cooling repairs in Las Vegas.</p>
+      </div>
+      <a href="/services/air-conditioning/emergency-ac-repair/" class="btn-secondary flex-shrink-0">Emergency Service</a>
+    </div>
+  </section>
+
+  <CTABlock />
+</BaseLayout>

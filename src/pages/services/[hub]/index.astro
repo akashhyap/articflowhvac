@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/Hero.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import ServiceCard from '../../../components/ServiceCard.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import CTABlock from '../../../components/CTABlock.astro';
+import { serviceHubs, business } from '../../../data/site';
+
+export function getStaticPaths() {
+  return serviceHubs.map((hub) => ({
+    params: { hub: hub.slug },
+    props: { hub },
+  }));
+}
+
+const { hub } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  provider: { '@type': 'LocalBusiness', name: business.name, telephone: business.phone },
+  name: hub.hubTitle + ' Las Vegas',
+  description: hub.metaDescription,
+  areaServed: { '@type': 'City', name: 'Las Vegas', addressRegion: 'NV' },
+};
+
+// Cross-cluster links: get other hubs
+const otherHubs = serviceHubs.filter((h) => h.slug !== hub.slug);
+---
+
+<BaseLayout title={hub.metaTitle} description={hub.metaDescription} schema={schema}>
+  <Hero heading={hub.heroHeading} subheading={hub.heroSubheading} />
+  <Breadcrumbs items={[
+    { label: 'Home', href: '/' },
+    { label: 'Services', href: '/services/' },
+    { label: hub.title },
+  ]} />
+
+  <!-- Intro -->
+  <section class="section-padding bg-white">
+    <div class="container-wide max-w-4xl mx-auto">
+      <h2 class="text-h2 text-primary mb-6">Expert {hub.title} Services in Las Vegas</h2>
+      <p class="text-neutral-700 text-body-lg leading-relaxed">{hub.intro}</p>
+    </div>
+  </section>
+
+  <!-- Spoke Services -->
+  <section class="section-padding bg-primary-50">
+    <div class="container-wide">
+      <h2 class="text-h2 text-primary text-center mb-4">Our {hub.title} Services</h2>
+      <p class="text-neutral-500 text-body-lg text-center max-w-2xl mx-auto mb-10">
+        Choose the service that matches your needs
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        {hub.spokes.map((spoke) => (
+          <ServiceCard
+            title={spoke.title}
+            description={spoke.intro.substring(0, 130) + '...'}
+            href={`/services/${hub.slug}/${spoke.slug}/`}
+            icon={spoke.icon}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us for This Service -->
+  <section class="section-padding bg-white">
+    <div class="container-wide max-w-4xl mx-auto">
+      <h2 class="text-h2 text-primary mb-6">Why Choose ArcticFlow for {hub.title}?</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="flex items-start gap-3">
+          <span class="text-accent text-xl mt-0.5 flex-shrink-0">✓</span>
+          <p class="text-neutral-700 text-body">24/7 emergency service available for urgent {hub.title.toLowerCase()} needs in Las Vegas</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-accent text-xl mt-0.5 flex-shrink-0">✓</span>
+          <p class="text-neutral-700 text-body">Licensed, insured technicians certified in all major HVAC brands</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-accent text-xl mt-0.5 flex-shrink-0">✓</span>
+          <p class="text-neutral-700 text-body">Upfront pricing with no hidden fees — free estimates on all work</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-accent text-xl mt-0.5 flex-shrink-0">✓</span>
+          <p class="text-neutral-700 text-body">Desert climate expertise — systems designed for Nevada heat and cold</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-accent text-xl mt-0.5 flex-shrink-0">✓</span>
+          <p class="text-neutral-700 text-body">Quality parts and workmanship backed by comprehensive warranties</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-accent text-xl mt-0.5 flex-shrink-0">✓</span>
+          <p class="text-neutral-700 text-body">Locally owned and operated — proudly serving the Las Vegas Valley</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cross-cluster links -->
+  <section class="section-padding bg-neutral-50">
+    <div class="container-wide">
+      <h2 class="text-h2 text-primary text-center mb-8">Other HVAC Services</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        {otherHubs.map((other) => (
+          <a href={`/services/${other.slug}/`} class="group bg-white rounded-xl shadow-sm border border-neutral-100 p-6 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+            <span class="text-4xl mb-3 block">{other.icon}</span>
+            <h3 class="text-h4 text-primary group-hover:text-secondary transition-colors">{other.hubTitle}</h3>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {hub.faqs.length > 0 && <FAQBlock faqs={hub.faqs} />}
+
+  <CTABlock heading={`Need ${hub.title} Service in Las Vegas?`} subheading={`Contact ArcticFlow HVAC for expert ${hub.title.toLowerCase()} services. Free estimates, fast response.`} />
+</BaseLayout>

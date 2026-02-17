@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CTABlock from '../components/CTABlock.astro';
+import { galleryItems } from '../data/site';
+---
+
+<BaseLayout
+  title="Our HVAC Work in Las Vegas | Project Gallery | ArcticFlow HVAC"
+  description="View our HVAC project gallery — AC installations, repairs, heat pump work, and more across Las Vegas homes and businesses."
+>
+  <Hero heading="Our HVAC Work in Las Vegas" subheading="Browse our portfolio of completed HVAC projects throughout the Las Vegas Valley" showCta={false} />
+  <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Gallery' }]} />
+
+  <section class="section-padding bg-white">
+    <div class="container-wide">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {galleryItems.map((item) => (
+          <div class="group bg-neutral-100 rounded-xl overflow-hidden shadow-sm border border-neutral-100 hover:shadow-md transition-all duration-300">
+            <div class="aspect-[4/3] bg-gradient-to-br from-primary-100 to-secondary-100 flex items-center justify-center">
+              <span class="text-5xl opacity-40 group-hover:opacity-60 transition-opacity">📸</span>
+            </div>
+            <div class="p-5">
+              <span class="text-small text-secondary font-medium bg-secondary-50 px-2.5 py-1 rounded-full">{item.category}</span>
+              <h3 class="text-h4 text-primary mt-2 mb-1">{item.title}</h3>
+              <p class="text-neutral-600 text-body">{item.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABlock heading="Need HVAC Work Done?" subheading="Contact us for a free estimate on your heating or cooling project in Las Vegas." />
+</BaseLayout>

@@ -1,0 +1,51 @@
+---
+import { serviceHubs } from '../data/site';
+
+export interface Props {
+  currentSlug: string;
+  parentSlug: string;
+  relatedSlugs: string[];
+}
+
+const { currentSlug, parentSlug, relatedSlugs } = Astro.props;
+
+// Find parent hub
+const parentHub = serviceHubs.find((h) => h.slug === parentSlug);
+const relatedServices = parentHub?.spokes.filter(
+  (s) => relatedSlugs.includes(s.slug) && s.slug !== currentSlug
+) || [];
+---
+
+{relatedServices.length > 0 && (
+  <section class="section-padding bg-primary-50">
+    <div class="container-wide">
+      <h2 class="text-h2 text-primary text-center mb-4">Related Services</h2>
+      <p class="text-neutral-500 text-body-lg text-center max-w-2xl mx-auto mb-10">
+        Explore other {parentHub?.title.toLowerCase()} services we offer in Las Vegas
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        {relatedServices.map((service) => (
+          <a
+            href={`/services/${parentSlug}/${service.slug}/`}
+            class="group bg-white rounded-xl shadow-sm border border-neutral-100 p-6 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+          >
+            <span class="text-3xl mb-3 block">{service.icon}</span>
+            <h3 class="text-h4 text-primary group-hover:text-secondary transition-colors mb-2">{service.title}</h3>
+            <p class="text-neutral-600 text-body line-clamp-2">{service.intro.substring(0, 120)}...</p>
+            <span class="inline-flex items-center text-secondary font-semibold text-body mt-3 gap-1.5 group-hover:text-accent transition-colors">
+              Learn More
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+        ))}
+      </div>
+
+      <!-- Vertical link back to parent hub -->
+      <div class="text-center mt-8">
+        <a href={`/services/${parentSlug}/`} class="text-secondary font-semibold text-body hover:text-accent transition-colors inline-flex items-center gap-2">
+          ← View all {parentHub?.title.toLowerCase()} services
+        </a>
+      </div>
+    </div>
+  </section>
+)}

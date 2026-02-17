@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/Hero.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import ProcessSteps from '../../../components/ProcessSteps.astro';
+import FAQBlock from '../../../components/FAQBlock.astro';
+import RelatedServices from '../../../components/RelatedServices.astro';
+import CTABlock from '../../../components/CTABlock.astro';
+import { serviceHubs, serviceAreas, business } from '../../../data/site';
+
+export function getStaticPaths() {
+  const paths: any[] = [];
+  serviceHubs.forEach((hub) => {
+    hub.spokes.forEach((spoke) => {
+      paths.push({
+        params: { hub: hub.slug, spoke: spoke.slug },
+        props: { hub, spoke },
+      });
+    });
+  });
+  return paths;
+}
+
+const { hub, spoke } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  provider: {
+    '@type': 'LocalBusiness',
+    name: business.name,
+    telephone: business.phone,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: business.address.street,
+      addressLocality: business.address.city,
+      addressRegion: business.address.state,
+      postalCode: business.address.zip,
+    },
+  },
+  name: spoke.title + ' Las Vegas',
+  description: spoke.metaDescription,
+  areaServed: { '@type': 'City', name: 'Las Vegas', addressRegion: 'NV' },
+};
+
+// Get a few service areas for contextual links
+const featuredAreas = serviceAreas.slice(0, 4);
+---
+
+<BaseLayout title={spoke.metaTitle} description={spoke.metaDescription} schema={schema}>
+  <Hero heading={spoke.heroHeading} subheading={spoke.heroSubheading} variant="service" />
+  <Breadcrumbs items={[
+    { label: 'Home', href: '/' },
+    { label: 'Services', href: '/services/' },
+    { label: hub.title, href: `/services/${hub.slug}/` },
+    { label: spoke.title },
+  ]} />
+
+  <!-- Intro Section -->
+  <section class="section-padding bg-white">
+    <div class="container-wide max-w-4xl mx-auto">
+      <h2 class="text-h2 text-primary mb-6">Professional {spoke.title} in Las Vegas, NV</h2>
+      <p class="text-neutral-700 text-body-lg leading-relaxed mb-8">{spoke.intro}</p>
+
+      <!-- Contextual link to parent hub -->
+      <div class="bg-primary-50 rounded-lg p-5 border border-primary-100 mb-8">
+        <p class="text-body text-neutral-700">
+          {spoke.title} is part of our comprehensive <a href={`/services/${hub.slug}/`} class="text-secondary font-semibold hover:text-accent transition-colors underline decoration-secondary/30 hover:decoration-accent">{hub.title.toLowerCase()} services</a> in Las Vegas. We offer a full range of {hub.title.toLowerCase()} solutions for residential and commercial customers.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem / Signs Section -->
+  <section class="section-padding bg-primary-50">
+    <div class="container-wide max-w-4xl mx-auto">
+      <h2 class="text-h2 text-primary mb-6">{spoke.problemHeading}</h2>
+      <p class="text-neutral-700 text-body-lg leading-relaxed">{spoke.problemText}</p>
+    </div>
+  </section>
+
+  <!-- Solution Section -->
+  <section class="section-padding bg-white">
+    <div class="container-wide max-w-4xl mx-auto">
+      <h2 class="text-h2 text-primary mb-6">{spoke.solutionHeading}</h2>
+      <p class="text-neutral-700 text-body-lg leading-relaxed">{spoke.solutionText}</p>
+    </div>
+  </section>
+
+  <!-- Process Steps -->
+  <ProcessSteps steps={spoke.processSteps} heading={`How Our ${spoke.title} Service Works`} />
+
+  <!-- Service Areas Contextual Links -->
+  <section class="section-padding bg-primary-50">
+    <div class="container-wide max-w-4xl mx-auto">
+      <h2 class="text-h2 text-primary mb-6">{spoke.title} Across the Las Vegas Valley</h2>
+      <p class="text-neutral-700 text-body mb-6">
+        ArcticFlow HVAC provides {spoke.title.toLowerCase()} services throughout the greater Las Vegas area. No matter where you are in the valley, our technicians can reach you quickly for fast, reliable service.
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {featuredAreas.map((area) => (
+          <a
+            href={`/service-areas/${area.slug}/`}
+            class="bg-white rounded-lg p-3 text-center border border-neutral-100 hover:border-secondary-200 hover:shadow-sm transition-all duration-200 text-body font-medium text-primary hover:text-secondary"
+          >
+            📍 {area.name}
+          </a>
+        ))}
+      </div>
+      <div class="text-center mt-4">
+        <a href="/service-areas/" class="text-secondary font-semibold text-body hover:text-accent transition-colors">
+          View all service areas →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  {spoke.faqs.length > 0 && <FAQBlock faqs={spoke.faqs} heading={`${spoke.title} FAQ`} />}
+
+  <!-- Related Services (Sibling Cross-Links) -->
+  <RelatedServices currentSlug={spoke.slug} parentSlug={hub.slug} relatedSlugs={spoke.relatedSlugs} />
+
+  <!-- Financing CTA -->
+  <section class="section-padding bg-white">
+    <div class="container-wide max-w-4xl mx-auto text-center">
+      <h2 class="text-h2 text-primary mb-4">Affordable {spoke.title} Options</h2>
+      <p class="text-neutral-600 text-body-lg mb-6">
+        Need {spoke.title.toLowerCase()} but concerned about cost? We offer free estimates and <a href="/financing/" class="text-secondary font-semibold hover:text-accent transition-colors underline decoration-secondary/30 hover:decoration-accent">flexible financing options</a> to make your HVAC service affordable.
+      </p>
+    </div>
+  </section>
+
+  <CTABlock heading={`Schedule ${spoke.title} in Las Vegas`} subheading={`Contact ArcticFlow HVAC today for professional ${spoke.title.toLowerCase()} service. Fast response, fair pricing.`} />
+</BaseLayout>

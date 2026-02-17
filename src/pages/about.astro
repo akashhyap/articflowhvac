@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import WhyChooseUs from '../components/WhyChooseUs.astro';
+import CTABlock from '../components/CTABlock.astro';
+import { business } from '../data/site';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: business.name,
+  url: business.domain,
+  telephone: business.phone,
+  email: business.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: business.address.street,
+    addressLocality: business.address.city,
+    addressRegion: business.address.state,
+    postalCode: business.address.zip,
+  },
+};
+---
+
+<BaseLayout
+  title="About ArcticFlow HVAC Las Vegas | Our Story & Values"
+  description="Learn about ArcticFlow HVAC Las Vegas — locally owned, licensed HVAC company serving the Las Vegas Valley. Certified technicians, quality workmanship."
+  schema={schema}
+>
+  <Hero heading="About ArcticFlow HVAC Las Vegas" subheading="Locally owned and operated — committed to excellence in every service call" />
+  <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'About' }]} />
+
+  <!-- Story -->
+  <section class="section-padding bg-white">
+    <div class="container-wide max-w-4xl mx-auto">
+      <h2 class="text-h2 text-primary mb-6">Our Story</h2>
+      <p class="text-neutral-700 text-body mb-5">
+        ArcticFlow HVAC was founded with a simple mission: to provide Las Vegas residents and businesses with honest, reliable, and expert HVAC services. With years of experience serving the Las Vegas Valley, our team of certified technicians has built a reputation for quality workmanship, fair pricing, and outstanding customer service.
+      </p>
+      <p class="text-neutral-700 text-body mb-5">
+        We understand that in the Nevada desert, your HVAC system is not just about comfort — it is about safety. When temperatures exceed 110°F in summer or drop below freezing on winter nights, you need a heating and cooling company that responds quickly and gets the job done right the first time.
+      </p>
+      <p class="text-neutral-700 text-body mb-5">
+        As a locally owned and operated business, we take pride in being part of the Las Vegas community. Every customer is our neighbor, and we treat every home and business with the care and respect they deserve. Our technicians are not just skilled professionals — they are members of this community who understand the unique challenges of maintaining comfort in the desert.
+      </p>
+
+      <h2 class="text-h2 text-primary mb-6 mt-12">Our Values</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-primary-50 rounded-xl p-6 border border-primary-100">
+          <h3 class="text-h3 text-primary mb-3">Integrity First</h3>
+          <p class="text-neutral-700 text-body">We provide honest assessments and upfront pricing. If a repair is all you need, we will never push you toward an unnecessary replacement. Your trust matters more to us than any single transaction.</p>
+        </div>
+        <div class="bg-primary-50 rounded-xl p-6 border border-primary-100">
+          <h3 class="text-h3 text-primary mb-3">Quality Workmanship</h3>
+          <p class="text-neutral-700 text-body">Every installation, repair, and maintenance visit is performed to the highest standards. We use quality parts, follow manufacturer specifications, and stand behind our work with comprehensive warranties.</p>
+        </div>
+        <div class="bg-primary-50 rounded-xl p-6 border border-primary-100">
+          <h3 class="text-h3 text-primary mb-3">Customer Satisfaction</h3>
+          <p class="text-neutral-700 text-body">Your comfort is our top priority. We are not satisfied until you are satisfied. Our team goes the extra mile to ensure every customer has a positive experience, from the first phone call to the completed service.</p>
+        </div>
+        <div class="bg-primary-50 rounded-xl p-6 border border-primary-100">
+          <h3 class="text-h3 text-primary mb-3">Continuous Improvement</h3>
+          <p class="text-neutral-700 text-body">HVAC technology evolves constantly. Our technicians participate in ongoing training and certification programs to stay current with the latest equipment, techniques, and energy-efficient solutions.</p>
+        </div>
+      </div>
+
+      <h2 class="text-h2 text-primary mb-6 mt-12">Certifications & Training</h2>
+      <p class="text-neutral-700 text-body mb-5">
+        Our technicians hold industry-recognized certifications and undergo regular training to maintain their expertise. We are licensed, bonded, and insured in the state of Nevada, and our team is factory-trained on all major HVAC brands including Carrier, Lennox, Trane, Rheem, and Goodman.
+      </p>
+      <p class="text-neutral-700 text-body">
+        We also maintain EPA 608 certifications for refrigerant handling, ensuring that all our work meets federal environmental regulations. When you choose ArcticFlow HVAC, you are choosing a team that takes professionalism and compliance seriously.
+      </p>
+    </div>
+  </section>
+
+  <WhyChooseUs />
+  <CTABlock />
+</BaseLayout>

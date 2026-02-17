@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { serviceAreas, serviceHubs, business } from '../../data/site';
+
+export function getStaticPaths() {
+  return serviceAreas.map((area) => ({
+    params: { area: area.slug },
+    props: { area },
+  }));
+}
+
+const { area } = Astro.props;
+
+// Other areas for cross-linking
+const otherAreas = serviceAreas.filter((a) => a.slug !== area.slug).slice(0, 4);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: business.name,
+  telephone: business.phone,
+  areaServed: {
+    '@type': 'City',
+    name: area.name,
+    addressRegion: 'NV',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: business.address.street,
+    addressLocality: business.address.city,
+    addressRegion: business.address.state,
+    postalCode: business.address.zip,
+  },
+};
+---
+
+<BaseLayout title={area.metaTitle} description={area.metaDescription} schema={schema}>
+  <Hero heading={area.heroHeading} subheading={`Trusted HVAC repair, installation, and maintenance serving ${area.name} homes and businesses`} />
+  <Breadcrumbs items={[
+    { label: 'Home', href: '/' },
+    { label: 'Service Areas', href: '/service-areas/' },
+    { label: area.name },
+  ]} />
+
+  <!-- Intro -->
+  <section class="section-padding bg-white">
+    <div class="container-wide max-w-4xl mx-auto">
+      <h2 class="text-h2 text-primary mb-6">HVAC Services in {area.name}</h2>
+      <p class="text-neutral-700 text-body-lg leading-relaxed mb-6">{area.intro}</p>
+
+      <div class="grid grid-cols-2 gap-3 mb-8">
+        {area.highlights.map((h) => (
+          <div class="flex items-center gap-2 bg-primary-50 rounded-lg p-3 border border-primary-100">
+            <span class="text-accent">✓</span>
+            <span class="text-body text-neutral-700">{h}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Available -->
+  <section class="section-padding bg-primary-50">
+    <div class="container-wide">
+      <h2 class="text-h2 text-primary text-center mb-4">HVAC Services Available in {area.name}</h2>
+      <p class="text-neutral-500 text-body-lg text-center max-w-2xl mx-auto mb-10">
+        We offer our full range of heating and cooling services to {area.name} customers
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {serviceHubs.map((hub) => (
+          <ServiceCard
+            title={hub.hubTitle}
+            description={`Professional ${hub.title.toLowerCase()} services for ${area.name} homes and businesses.`}
+            href={`/services/${hub.slug}/`}
+            icon={hub.icon}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Local Trust Section -->
+  <section class="section-padding bg-white">
+    <div class="container-wide max-w-4xl mx-auto">
+      <h2 class="text-h2 text-primary mb-6">Why {area.name} Trusts ArcticFlow HVAC</h2>
+      <p class="text-neutral-700 text-body mb-5">
+        As a locally owned and operated HVAC company, ArcticFlow HVAC is committed to providing {area.name} residents with the highest quality heating and cooling services. Our technicians are familiar with the specific needs of {area.name} properties, from newer construction to established homes.
+      </p>
+      <p class="text-neutral-700 text-body mb-5">
+        We offer fast response times to {area.name}, competitive pricing with free estimates, and our quality workmanship guarantee on every job. Whether you need a routine <a href="/services/air-conditioning/ac-maintenance/" class="text-secondary font-semibold hover:text-accent transition-colors">AC tune-up</a>, an <a href="/services/air-conditioning/emergency-ac-repair/" class="text-secondary font-semibold hover:text-accent transition-colors">emergency AC repair</a>, or a complete <a href="/services/air-conditioning/ac-installation/" class="text-secondary font-semibold hover:text-accent transition-colors">system installation</a>, we are here for you.
+      </p>
+      <p class="text-neutral-700 text-body">
+        Contact us today for a free estimate or to <a href="/contact/" class="text-secondary font-semibold hover:text-accent transition-colors">schedule service</a> in {area.name}. We also offer <a href="/financing/" class="text-secondary font-semibold hover:text-accent transition-colors">financing options</a> to make major HVAC investments more affordable.
+      </p>
+    </div>
+  </section>
+
+  <!-- Other Service Areas -->
+  <section class="section-padding bg-neutral-50">
+    <div class="container-wide">
+      <h2 class="text-h2 text-primary text-center mb-8">Other Communities We Serve</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
+        {otherAreas.map((other) => (
+          <a
+            href={`/service-areas/${other.slug}/`}
+            class="bg-white rounded-lg p-4 text-center border border-neutral-100 hover:border-secondary-200 hover:shadow-sm transition-all duration-200"
+          >
+            <span class="text-body font-semibold text-primary hover:text-secondary transition-colors">{other.name}</span>
+          </a>
+        ))}
+      </div>
+      <div class="text-center mt-6">
+        <a href="/service-areas/" class="text-secondary font-semibold text-body hover:text-accent transition-colors">
+          ← View all service areas
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTABlock heading={`Schedule HVAC Service in ${area.name}`} subheading={`Call ArcticFlow HVAC for fast, professional heating and cooling service in ${area.name}, NV.`} />
+</BaseLayout>

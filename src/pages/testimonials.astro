@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Testimonials from '../components/Testimonials.astro';
+import CTABlock from '../components/CTABlock.astro';
+import { testimonials, business } from '../data/site';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: business.name,
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5.0',
+    reviewCount: String(testimonials.length),
+    bestRating: '5',
+    worstRating: '1',
+  },
+  review: testimonials.map((t) => ({
+    '@type': 'Review',
+    author: { '@type': 'Person', name: t.name },
+    reviewRating: { '@type': 'Rating', ratingValue: String(t.rating) },
+    reviewBody: t.text,
+  })),
+};
+---
+
+<BaseLayout
+  title="Customer Reviews | ArcticFlow HVAC Las Vegas"
+  description="Read what our Las Vegas customers say about ArcticFlow HVAC. 5-star reviews for AC repair, installation, and heating services."
+  schema={schema}
+>
+  <Hero heading="Customer Reviews" subheading="See what Las Vegas homeowners and businesses say about our HVAC services" showCta={false} />
+  <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Testimonials' }]} />
+
+  <Testimonials />
+
+  <CTABlock heading="Experience the ArcticFlow Difference" subheading="Join our growing list of satisfied customers throughout Las Vegas." />
+</BaseLayout>

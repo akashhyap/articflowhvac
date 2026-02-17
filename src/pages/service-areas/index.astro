@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CTABlock from '../../components/CTABlock.astro';
+import { serviceAreas, business } from '../../data/site';
+---
+
+<BaseLayout
+  title="HVAC Service Areas in Greater Las Vegas | ArcticFlow HVAC"
+  description="ArcticFlow HVAC serves Las Vegas, Henderson, North Las Vegas, Summerlin, Paradise, Enterprise, Spring Valley, and Whitney. Call (725) 349-4849."
+>
+  <Hero heading="HVAC Service Areas in Greater Las Vegas" subheading="Professional heating and cooling services throughout the Las Vegas Valley" />
+  <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Service Areas' }]} />
+
+  <section class="section-padding bg-white">
+    <div class="container-wide">
+      <h2 class="text-h2 text-primary text-center mb-4">Communities We Serve</h2>
+      <p class="text-neutral-500 text-body-lg text-center max-w-3xl mx-auto mb-12">
+        ArcticFlow HVAC provides comprehensive HVAC services to homes and businesses across the Las Vegas Valley. Select your community below to learn more about our local service.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {serviceAreas.map((area) => (
+          <a
+            href={`/service-areas/${area.slug}/`}
+            class="group bg-white rounded-xl shadow-md border border-neutral-100 p-6 text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+          >
+            <span class="text-4xl mb-3 block">📍</span>
+            <h3 class="text-h3 text-primary group-hover:text-secondary transition-colors mb-2">{area.name}</h3>
+            <p class="text-neutral-500 text-body">HVAC Services</p>
+            <span class="inline-flex items-center text-secondary font-semibold text-body mt-3 gap-1 group-hover:text-accent transition-colors">
+              Learn More
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABlock heading="Need HVAC Service in the Las Vegas Valley?" subheading="No matter where you are in the valley, ArcticFlow HVAC has you covered. Call us today." />
+</BaseLayout>

@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CTABlock from '../components/CTABlock.astro';
+import { business } from '../data/site';
+---
+
+<BaseLayout
+  title="HVAC Financing Options Las Vegas | ArcticFlow HVAC"
+  description="Flexible HVAC financing options in Las Vegas. Affordable monthly payments for AC installation, furnace replacement, and more. Apply today."
+>
+  <Hero heading="HVAC Financing Options in Las Vegas" subheading="Affordable payment plans to keep your home comfortable year-round" />
+  <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Financing' }]} />
+
+  <section class="section-padding bg-white">
+    <div class="container-wide max-w-4xl mx-auto">
+      <h2 class="text-h2 text-primary mb-6">Flexible Financing for Your HVAC Needs</h2>
+      <p class="text-neutral-700 text-body mb-5">
+        A new HVAC system is a significant investment in your home's comfort and value. ArcticFlow HVAC understands that not every homeowner can pay for a major installation or replacement upfront. That is why we offer flexible financing options that make it easy to get the heating and cooling system you need with affordable monthly payments.
+      </p>
+      <p class="text-neutral-700 text-body mb-8">
+        Whether you need an emergency replacement or you are planning a system upgrade, our financing plans are designed to fit a range of budgets and credit profiles. Ask our team about available financing options during your free estimate.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="bg-primary-50 rounded-xl p-6 border border-primary-100 text-center">
+          <span class="text-4xl mb-3 block">💳</span>
+          <h3 class="text-h4 text-primary mb-2">Low Monthly Payments</h3>
+          <p class="text-neutral-700 text-body">Spread the cost of your new HVAC system over manageable monthly payments that fit your budget.</p>
+        </div>
+        <div class="bg-primary-50 rounded-xl p-6 border border-primary-100 text-center">
+          <span class="text-4xl mb-3 block">⚡</span>
+          <h3 class="text-h4 text-primary mb-2">Quick Approval</h3>
+          <p class="text-neutral-700 text-body">Our streamlined application process delivers fast approval decisions so you can get your project started sooner.</p>
+        </div>
+        <div class="bg-primary-50 rounded-xl p-6 border border-primary-100 text-center">
+          <span class="text-4xl mb-3 block">🎯</span>
+          <h3 class="text-h4 text-primary mb-2">Competitive Rates</h3>
+          <p class="text-neutral-700 text-body">We partner with trusted lenders to offer competitive interest rates and flexible terms for qualified applicants.</p>
+        </div>
+      </div>
+
+      <h2 class="text-h2 text-primary mb-6">How Financing Works</h2>
+      <div class="space-y-6 mb-12">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center flex-shrink-0">
+            <span class="text-primary-900 font-heading font-bold text-body">1</span>
+          </div>
+          <div>
+            <h3 class="text-h4 text-primary mb-1">Get Your Free Estimate</h3>
+            <p class="text-neutral-700 text-body">Contact us for a free, no-obligation estimate on your HVAC project. We will assess your needs and recommend the best solution.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center flex-shrink-0">
+            <span class="text-primary-900 font-heading font-bold text-body">2</span>
+          </div>
+          <div>
+            <h3 class="text-h4 text-primary mb-1">Choose Your Financing Option</h3>
+            <p class="text-neutral-700 text-body">Our team will present available financing plans and help you choose the option that best fits your budget and timeline.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center flex-shrink-0">
+            <span class="text-primary-900 font-heading font-bold text-body">3</span>
+          </div>
+          <div>
+            <h3 class="text-h4 text-primary mb-1">Quick Application</h3>
+            <p class="text-neutral-700 text-body">Complete a simple application and receive a fast approval decision. Most applications are processed within minutes.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center flex-shrink-0">
+            <span class="text-primary-900 font-heading font-bold text-body">4</span>
+          </div>
+          <div>
+            <h3 class="text-h4 text-primary mb-1">Enjoy Your New System</h3>
+            <p class="text-neutral-700 text-body">Once approved, we schedule your installation. You enjoy your new, energy-efficient HVAC system while making comfortable monthly payments.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-secondary-50 rounded-xl p-8 border border-secondary-100 text-center">
+        <h3 class="text-h3 text-primary mb-3">Ready to Explore Financing?</h3>
+        <p class="text-neutral-700 text-body mb-5">Call us today to discuss financing options during your free HVAC estimate.</p>
+        <a href={`tel:${business.phoneRaw}`} class="btn-primary">Call {business.phone}</a>
+      </div>
+    </div>
+  </section>
+
+  <CTABlock />
+</BaseLayout>

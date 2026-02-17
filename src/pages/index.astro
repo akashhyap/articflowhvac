@@ -1,0 +1,200 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import Hero from '../components/Hero.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import WhyChooseUs from '../components/WhyChooseUs.astro';
+import Testimonials from '../components/Testimonials.astro';
+import ServiceAreaList from '../components/ServiceAreaList.astro';
+import CTABlock from '../components/CTABlock.astro';
+import { business, serviceHubs } from '../data/site';
+
+import galleryInstall from '../assets/ac-installation-service.jpg';
+import galleryRepair from '../assets/AC-Repair-Air-Conditioning-Services-in-Queen-Creek-AZ.jpg';
+import galleryContractor from '../assets/HVAC-contractor-in-San-Antonio.jpg';
+import galleryMaintenance from '../assets/maintenance.jpg';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': business.domain,
+  name: business.name,
+  description: 'Professional HVAC installation, repair and maintenance services for residential and commercial systems in Las Vegas, NV.',
+  url: business.domain,
+  telephone: business.phone,
+  email: business.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: business.address.street,
+    addressLocality: business.address.city,
+    addressRegion: business.address.state,
+    postalCode: business.address.zip,
+    addressCountry: 'US',
+  },
+  openingHours: 'Mo-Su 00:00-23:59',
+  priceRange: '$$',
+  areaServed: ['Las Vegas', 'Henderson', 'North Las Vegas', 'Summerlin', 'Paradise', 'Enterprise', 'Spring Valley', 'Whitney'],
+};
+---
+
+<BaseLayout
+  title="ArcticFlow HVAC Las Vegas | AC Repair, Installation & Heating Services"
+  description="Professional HVAC repair, installation, and maintenance in Las Vegas, NV. 24/7 emergency service. Licensed, insured, and locally owned. Call (725) 349-4849."
+  schema={schema}
+>
+  <!-- Hero -->
+  <Hero
+    heading="Heating & Cooling Services You Can Trust"
+    subheading="Expert HVAC installation, repair and maintenance services for residential and commercial systems in Las Vegas, NV"
+    variant="home"
+    showForm={false}
+  />
+
+  <!-- Services Section -->
+  <section class="section-padding bg-white">
+    <div class="container-wide">
+      <h2 class="text-[1.75rem] sm:text-h2 text-primary text-center mb-2 sm:mb-3">Our HVAC Services</h2>
+      <p class="text-neutral-500 text-[1rem] sm:text-body-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">Reliable heating and cooling solutions for every need</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        {serviceHubs.map((hub) => (
+          <ServiceCard
+            title={hub.hubTitle}
+            description={hub.intro.substring(0, 130) + '...'}
+            href={`/services/${hub.slug}/`}
+            icon={hub.icon}
+          />
+        ))}
+      </div>
+
+      <div class="text-center mt-8 sm:mt-10">
+        <a href="/services/" class="btn-secondary">Explore All Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work Gallery -->
+  <section class="section-padding bg-neutral-50">
+    <div class="container-wide">
+      <span class="text-secondary font-heading font-bold text-[0.8125rem] sm:text-[0.9375rem] tracking-wide uppercase mb-2 block text-center">Our Work</span>
+      <h2 class="text-[1.75rem] sm:text-h2 text-primary text-center mb-8 sm:mb-10">Professional HVAC Services in Action</h2>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <a href="/gallery/" class="group relative rounded-xl overflow-hidden aspect-[4/3]">
+          <Image src={galleryInstall} alt="AC installation service in Las Vegas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" widths={[320, 480, 640]} sizes="(max-width: 1024px) 50vw, 25vw" quality={80} loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span class="absolute bottom-3 left-3 text-white text-[0.875rem] sm:text-[1rem] font-heading font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">AC Installation</span>
+        </a>
+        <a href="/gallery/" class="group relative rounded-xl overflow-hidden aspect-[4/3]">
+          <Image src={galleryRepair} alt="AC repair and air conditioning services" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" widths={[320, 480, 640]} sizes="(max-width: 1024px) 50vw, 25vw" quality={80} loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span class="absolute bottom-3 left-3 text-white text-[0.875rem] sm:text-[1rem] font-heading font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">AC Repair</span>
+        </a>
+        <a href="/gallery/" class="group relative rounded-xl overflow-hidden aspect-[4/3]">
+          <Image src={galleryContractor} alt="HVAC contractor at work" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" widths={[320, 480, 640]} sizes="(max-width: 1024px) 50vw, 25vw" quality={80} loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span class="absolute bottom-3 left-3 text-white text-[0.875rem] sm:text-[1rem] font-heading font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">Expert Technicians</span>
+        </a>
+        <a href="/gallery/" class="group relative rounded-xl overflow-hidden aspect-[4/3]">
+          <Image src={galleryMaintenance} alt="HVAC maintenance service" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" widths={[320, 480, 640]} sizes="(max-width: 1024px) 50vw, 25vw" quality={80} loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span class="absolute bottom-3 left-3 text-white text-[0.875rem] sm:text-[1rem] font-heading font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">Maintenance</span>
+        </a>
+      </div>
+      <div class="text-center mt-8">
+        <a href="/gallery/" class="btn-secondary">View Full Gallery</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Snippet + Lead Form -->
+  <section class="section-padding bg-primary-50">
+    <div class="container-wide">
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start max-w-6xl mx-auto">
+        <div>
+          <span class="text-secondary font-heading font-bold text-[0.8125rem] sm:text-[0.9375rem] tracking-wide uppercase mb-2 sm:mb-3 block">About Our Company</span>
+          <h2 class="text-[1.75rem] sm:text-h2 text-primary mb-4 sm:mb-5">About ArcticFlow HVAC Las Vegas</h2>
+          <p class="text-neutral-700 text-[1rem] sm:text-body mb-3 sm:mb-4">
+            With years of experience serving the Las Vegas, NV area, ArcticFlow HVAC has built a reputation for excellence in heating, ventilation, and air conditioning services. Our team of certified technicians understands the unique challenges of maintaining comfort in the Nevada desert climate.
+          </p>
+          <p class="text-neutral-700 text-[1rem] sm:text-body mb-5 sm:mb-6">
+            We understand that reliable air conditioning is essential in Las Vegas, which is why we offer professional HVAC services that you can count on 24/7. Whether you need emergency repairs during a heat wave, routine maintenance, or a complete system installation, we are here to keep you cool.
+          </p>
+          <a href="/about/" class="btn-secondary">Learn More About Us</a>
+        </div>
+        <div class="bg-white rounded-2xl shadow-lg border border-neutral-100 p-6 sm:p-8">
+          <h3 class="text-[1.35rem] sm:text-h3 text-primary mb-2">Request a Free Estimate</h3>
+          <p class="text-neutral-500 text-[0.9375rem] sm:text-[1rem] mb-5 sm:mb-6">Need HVAC service? Get a fast, free estimate from our certified technicians today.</p>
+          <form class="space-y-3.5 sm:space-y-4" action="/contact/" method="GET">
+            <input type="text" name="name" placeholder="Your Name" required class="w-full px-4 py-3 sm:py-3.5 border border-neutral-200 rounded-lg text-[1rem] focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent" />
+            <input type="tel" name="phone" placeholder="Phone Number" required class="w-full px-4 py-3 sm:py-3.5 border border-neutral-200 rounded-lg text-[1rem] focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent" />
+            <input type="email" name="email" placeholder="Email Address" class="w-full px-4 py-3 sm:py-3.5 border border-neutral-200 rounded-lg text-[1rem] focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent" />
+            <textarea name="message" placeholder="Tell us about your HVAC needs..." rows="3" class="w-full px-4 py-3 sm:py-3.5 border border-neutral-200 rounded-lg text-[1rem] focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent resize-none"></textarea>
+            <button type="submit" class="btn-primary w-full">Get My Free Estimate</button>
+          </form>
+          <div class="mt-4 sm:mt-5 flex flex-wrap items-center gap-3 sm:gap-4 justify-center text-[0.8125rem] sm:text-[0.9375rem] text-neutral-400">
+            <span class="flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-accent"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Same-Day Service
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-accent"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              No Obligation
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-accent"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              100% Free
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <WhyChooseUs />
+
+  <!-- Testimonials -->
+  <Testimonials featured={true} limit={4} />
+
+  <!-- Service Areas -->
+  <ServiceAreaList />
+
+  <!-- Business Hours -->
+  <section class="section-padding bg-white">
+    <div class="container-wide">
+      <div class="grid lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
+        <div>
+          <h2 class="text-h2 text-primary mb-6">Business Hours & Service Areas</h2>
+          <div class="bg-neutral-50 rounded-xl p-6 border border-neutral-100">
+            <h3 class="text-h4 text-primary mb-4">Regular Hours</h3>
+            <div class="space-y-2.5">
+              {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => (
+                <div class="flex justify-between text-body">
+                  <span class="text-neutral-700 font-medium">{day}</span>
+                  <span class="text-secondary font-semibold">24/7</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="bg-gradient-to-br from-secondary to-primary rounded-xl p-8 text-white h-full flex flex-col justify-center">
+            <h3 class="text-h3 text-white mb-3">24/7 Emergency Service</h3>
+            <p class="text-white/85 text-body-lg mb-6">
+              HVAC emergencies don't wait for business hours. In the Las Vegas heat, we're available around the clock to restore your comfort!
+            </p>
+            <div>
+              <span class="text-white/70 text-body block mb-1">Call Now:</span>
+              <a href={`tel:${business.phoneRaw}`} class="text-accent text-h2 font-heading font-extrabold hover:text-accent-300 transition-colors">
+                {business.phone}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CTABlock />
+</BaseLayout>

@@ -1,0 +1,108 @@
+---
+import { business, serviceHubs, serviceAreas } from '../data/site';
+---
+
+<footer class="bg-primary text-white">
+  <!-- Main Footer -->
+  <div class="section-padding !pb-12">
+    <div class="container-wide grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <!-- Brand -->
+      <div>
+        <a href="/" class="inline-flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0 border border-white/10">
+            <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2v20M12 2l-3 3M12 2l3 3M12 22l-3-3M12 22l3-3" stroke="#F0A500" stroke-width="2" stroke-linecap="round"/>
+              <path d="M2 12h20M2 12l3-3M2 12l3 3M22 12l-3-3M22 12l3 3" stroke="#F0A500" stroke-width="2" stroke-linecap="round"/>
+              <path d="M4.93 4.93l14.14 14.14M4.93 4.93l1.41 3.54M4.93 4.93l3.54 1.41" stroke="#F0A500" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+              <path d="M19.07 4.93L4.93 19.07M19.07 4.93l-1.41 3.54M19.07 4.93l-3.54 1.41" stroke="#F0A500" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+              <circle cx="12" cy="12" r="2.5" fill="#F0A500"/>
+            </svg>
+          </div>
+          <div class="leading-none">
+            <span class="text-[1.2rem] font-heading font-extrabold tracking-tight text-white block">ARCTICFLOW</span>
+            <span class="text-[0.6rem] font-heading font-bold tracking-[0.25em] uppercase text-primary-300 block">HVAC Las Vegas</span>
+          </div>
+        </a>
+        <p class="text-primary-200 text-[0.9375rem] leading-relaxed mb-4">
+          Your trusted partner for all heating and cooling needs in Las Vegas, NV. Professional HVAC services with a commitment to quality, reliability, and customer satisfaction.
+        </p>
+        <p class="text-accent font-semibold text-body">24/7 Emergency Service</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-h4 text-white font-heading font-bold mb-4">Quick Links</h3>
+        <ul class="space-y-2.5">
+          <li><a href="/" class="text-primary-200 hover:text-accent transition-colors text-body">Home</a></li>
+          <li><a href="/services/" class="text-primary-200 hover:text-accent transition-colors text-body">Services</a></li>
+          <li><a href="/about/" class="text-primary-200 hover:text-accent transition-colors text-body">About</a></li>
+          <li><a href="/gallery/" class="text-primary-200 hover:text-accent transition-colors text-body">Gallery</a></li>
+          <li><a href="/testimonials/" class="text-primary-200 hover:text-accent transition-colors text-body">Testimonials</a></li>
+          <li><a href="/financing/" class="text-primary-200 hover:text-accent transition-colors text-body">Financing</a></li>
+          <li><a href="/contact/" class="text-primary-200 hover:text-accent transition-colors text-body">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <h3 class="text-h4 text-white font-heading font-bold mb-4">Services</h3>
+        <ul class="space-y-2.5">
+          {serviceHubs.map((hub) => (
+            <li>
+              <a href={`/services/${hub.slug}/`} class="text-primary-200 hover:text-accent transition-colors text-body">
+                {hub.hubTitle}
+              </a>
+            </li>
+          ))}
+          <li><a href="/services/air-conditioning/emergency-ac-repair/" class="text-primary-200 hover:text-accent transition-colors text-body">Emergency Service</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div>
+        <h3 class="text-h4 text-white font-heading font-bold mb-4">Contact Info</h3>
+        <ul class="space-y-3.5">
+          <li class="flex items-start gap-3">
+            <span class="text-accent mt-0.5">📍</span>
+            <span class="text-primary-200 text-body">{business.address.full}</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="text-accent">📞</span>
+            <a href={`tel:${business.phoneRaw}`} class="text-primary-200 hover:text-accent transition-colors text-body font-semibold">{business.phone}</a>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="text-accent">📧</span>
+            <a href={`mailto:${business.email}`} class="text-primary-200 hover:text-accent transition-colors text-body">{business.email}</a>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-accent mt-0.5">🕐</span>
+            <span class="text-primary-200 text-body">{business.hours}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Service Areas Bar -->
+  <div class="border-t border-primary-400 py-6 px-4 sm:px-6 lg:px-8">
+    <div class="container-wide">
+      <p class="text-[0.9375rem] text-primary-300 text-center">
+        <span class="font-semibold text-primary-200">Serving:</span>
+        {serviceAreas.map((area, i) => (
+          <>
+            <a href={`/service-areas/${area.slug}/`} class="hover:text-accent transition-colors">{area.name}</a>{i < serviceAreas.length - 1 ? ' · ' : ''}
+          </>
+        ))}
+      </p>
+    </div>
+  </div>
+
+  <!-- Copyright -->
+  <div class="border-t border-primary-400 py-5 px-4 sm:px-6 lg:px-8">
+    <div class="container-wide text-center">
+      <p class="text-primary-300 text-[0.875rem]">
+        © {new Date().getFullYear()} {business.name}. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>

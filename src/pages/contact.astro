@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { business } from '../data/site';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: 'Contact ArcticFlow HVAC Las Vegas',
+  url: `${business.domain}/contact/`,
+  mainEntity: {
+    '@type': 'LocalBusiness',
+    name: business.name,
+    telephone: business.phone,
+    email: business.email,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: business.address.street,
+      addressLocality: business.address.city,
+      addressRegion: business.address.state,
+      postalCode: business.address.zip,
+    },
+  },
+};
+---
+
+<BaseLayout
+  title="Contact ArcticFlow HVAC Las Vegas | Free Estimates"
+  description="Contact ArcticFlow HVAC for heating and cooling services in Las Vegas. Free estimates, 24/7 emergency service. Call (725) 349-4849 or use our online form."
+  schema={schema}
+>
+  <Hero heading="Contact ArcticFlow HVAC Las Vegas" subheading="Get in touch for a free estimate or to schedule HVAC service" />
+  <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
+
+  <section class="section-padding bg-white">
+    <div class="container-wide">
+      <div class="grid lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
+        <!-- Contact Form -->
+        <ContactForm />
+
+        <!-- Contact Info -->
+        <div>
+          <h2 class="text-h2 text-primary mb-6">Contact Information</h2>
+          <div class="space-y-6">
+            <div class="flex items-start gap-4 bg-primary-50 rounded-xl p-5 border border-primary-100">
+              <span class="text-2xl mt-0.5">📍</span>
+              <div>
+                <h3 class="text-h4 text-primary mb-1">Address</h3>
+                <p class="text-neutral-700 text-body">{business.address.full}</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 bg-primary-50 rounded-xl p-5 border border-primary-100">
+              <span class="text-2xl mt-0.5">📞</span>
+              <div>
+                <h3 class="text-h4 text-primary mb-1">Phone</h3>
+                <a href={`tel:${business.phoneRaw}`} class="text-secondary text-body font-semibold hover:text-accent transition-colors">{business.phone}</a>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 bg-primary-50 rounded-xl p-5 border border-primary-100">
+              <span class="text-2xl mt-0.5">📧</span>
+              <div>
+                <h3 class="text-h4 text-primary mb-1">Email</h3>
+                <a href={`mailto:${business.email}`} class="text-secondary text-body hover:text-accent transition-colors">{business.email}</a>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 bg-primary-50 rounded-xl p-5 border border-primary-100">
+              <span class="text-2xl mt-0.5">🕐</span>
+              <div>
+                <h3 class="text-h4 text-primary mb-1">Hours</h3>
+                <p class="text-neutral-700 text-body">{business.hours}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Map placeholder -->
+          <div class="mt-8 bg-neutral-100 rounded-xl h-64 flex items-center justify-center border border-neutral-200">
+            <div class="text-center">
+              <span class="text-4xl block mb-2">🗺️</span>
+              <p class="text-neutral-500 text-body">Google Maps Embed</p>
+              <p class="text-neutral-400 text-small">{business.address.full}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
