@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import heroImage from '../assets/hvac-contractor-in-san-antonio.jpg';
+import heroImage from '../assets/HVAC-contractor-in-San-Antonio.jpg';
 import { business } from '../data/site';
 
 export interface Props {
@@ -52,7 +52,7 @@ const isHome = variant === 'home';
       </p>
 
       {showCta && (
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center sm:justify-center gap-3 sm:gap-4 max-w-sm sm:max-w-none">
+        <div class={`flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 max-w-sm sm:max-w-none ${!isHome ? 'justify-center' : ''}`}>
           <a href="/contact/" class="btn-primary text-center">Get a Free Estimate</a>
           <a href={`tel:${business.phoneRaw}`} class="btn-outline-white text-center">Call: {business.phone}</a>
         </div>
